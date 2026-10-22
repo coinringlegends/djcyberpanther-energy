@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "DJ CYBERPANTHER ENERGY product entity representing Duo Mix boxes and cans",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "tagline": { "type": "string", "maxLength": 200 },
+        "flavor1": { "type": "string", "maxLength": 100 },
+        "flavor2": { "type": "string", "maxLength": 100 },
+        "price": { "type": "number" },
+        "volume": { "type": "string", "maxLength": 50 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "ingredients": { "type": "string", "maxLength": 1000 },
+        "isSugarFree": { "type": "boolean" },
+        "category": { "type": "string", "maxLength": 50 },
+        "stock": { "type": "number" },
+        "badge": { "type": "string", "maxLength": 50 },
+        "imageBox": { "type": "string", "maxLength": 500 },
+        "imageCansSnow": { "type": "string", "maxLength": 500 },
+        "imageCanFront": { "type": "string", "maxLength": 500 },
+        "imageMockup": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "price", "category", "stock"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order placed via WhatsApp, Twint, or Web checkout",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerName": { "type": "string", "maxLength": 100 },
+        "customerAddress": { "type": "string", "maxLength": 300 },
+        "customerPhone": { "type": "string", "maxLength": 50 },
+        "customerEmail": { "type": "string", "maxLength": 100 },
+        "totalAmount": { "type": "number" },
+        "paymentMethod": { "type": "string", "maxLength": 50 },
+        "paymentStatus": { "type": "string", "maxLength": 50 },
+        "twintProofUrl": { "type": "string", "maxLength": 500 },
+        "whatsappDispatched": { "type": "boolean" },
+        "status": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["customerName", "customerAddress", "customerPhone", "totalAmount", "paymentMethod"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Public catalog of DJ CYBERPANTHER energy drinks and DUO MIX 6-packs"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer orders submitted via Twint, WhatsApp Calmebot, or web checkout"
+    }
+  }
+}

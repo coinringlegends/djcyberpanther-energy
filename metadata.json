@@ -1,0 +1,6 @@
+{
+  "name": "DJ CYBERPANTHER ENERGY - Official Cyberpunk Winter Rave Shop",
+  "description": "Offizieller Store für DJ CYBERPANTHER ENERGY - Cyberpunk x Winter Forest Rave Energy Drinks, DUO MIX 6-Pack Boxen und Dosen mit Tannenwald & Nordlicht Flavors.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
