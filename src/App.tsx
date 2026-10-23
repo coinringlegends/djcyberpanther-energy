@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  collection, onSnapshot, doc, getDocFromServer 
+  collection, onSnapshot, doc, setDoc, getDocFromServer 
 } from 'firebase/firestore';
 import { db, isFirebaseConnected, handleFirestoreError } from './firebaseConfig.ts';
 import { INITIAL_PRODUCTS } from './data/products.js';
@@ -89,15 +89,31 @@ export default function App() {
   // LIVE Firestore onSnapshot for Products
   useEffect(() => {
     let unsubscribe: (() => void) | null = null;
+    let hasSeeded = false;
+
     try {
       if (db) {
         const prodRef = collection(db, 'products');
-        unsubscribe = onSnapshot(prodRef, (snapshot) => {
+        unsubscribe = onSnapshot(prodRef, async (snapshot) => {
           if (!snapshot.empty) {
             const fetched = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
             setProducts(fetched);
           } else {
             setProducts(INITIAL_PRODUCTS);
+            // Auto seed to Firestore if collection is empty
+            if (!hasSeeded) {
+              hasSeeded = true;
+              try {
+                for (const item of INITIAL_PRODUCTS) {
+                  await setDoc(doc(db, 'products', item.id), {
+                    ...item,
+                    createdAt: new Date().toISOString()
+                  });
+                }
+              } catch (seedErr) {
+                console.warn('Auto-seed products note:', seedErr);
+              }
+            }
           }
         }, (error) => {
           handleFirestoreError(error, 'list', 'products');
